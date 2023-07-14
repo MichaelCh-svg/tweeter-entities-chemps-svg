@@ -11,3 +11,7 @@ Run 'npm i' in the terminal to install the dependencies specified in the package
 
 Run 'npm publish' in the terminal.
 -If you have not logged in to npm yet, look at [setup from scratch](SETUP_FROM_SCRATCH.md) to see how.
+
+### Publishing a new version
+Change the version in the package.json file.
+Run npm publish.
