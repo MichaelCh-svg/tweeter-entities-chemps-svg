@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "lib": [
+      "ES2021"
+    ],
+    "outDir": "./dist",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "declaration": true
+  },
+  "include": [
+    "test/**/*.ts",
+    "lib/**/*.ts",
+    "index.ts"
+  ]
+}

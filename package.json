@@ -1,0 +1,38 @@
+{
+  "name": "tweeter-entities-chemps-svg",
+  "version": "0.0.8",
+  "description": "Describe your project TODO",
+  "main": "dist/index",
+  "typings": "dist/index",
+  "scripts": {
+    "prepublishOnly": "npm run compile",
+    "compile": "npm run clean && tsc -p .",
+    "watch": "tsc -w -p .",
+    "clean": "rm -rf dist"
+  },
+  "bugs": {
+    "url": "http://github.com/$TODO-github-username/$TODO-module-name/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/$TODO-github-username/$TODO-module-name.git"
+  },
+  "keywords": [
+    "your keywords TODO"
+  ],
+  "author": "your name <your.contact.email@service.com> TODO",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^8.0.0",
+    "typescript": "^5.1.6"
+  },
+  "files": [
+    "dist/index.js",
+    "dist/index.d.ts",
+    "dist/lib"
+  ],
+  "dependencies": {
+    "moment": "^2.29.4",
+    "uuid": "^9.0.0"
+  }
+}
