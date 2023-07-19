@@ -9,9 +9,14 @@ Change the version to be "0.0.1".
 ### Install dependencies, login to npm, and publish the results
 Run 'npm i' in the terminal to install the dependencies specified in the package.json file.
 
-Run 'npm publish' in the terminal.
--If you have not logged in to npm yet, look at [setup from scratch](SETUP_FROM_SCRATCH.md) to see how.
+Run 'npm adduser' and follow the instructions to login or sign up.
+
+Run 'npm publish'.
 
 ### Publishing a new version
 Change the version in the package.json file.
-Run npm publish.
+
+Run 'npm publish'.
+
+### Creating a typescript module from scratch.
+Follow the instructions at [setup from scratch](SETUP_FROM_SCRATCH.md) to figure out how to create your own typescript module.
