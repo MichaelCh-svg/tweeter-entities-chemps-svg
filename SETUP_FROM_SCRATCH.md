@@ -8,11 +8,10 @@ https://60devs.com/guides/publishing-a-typescript-module-to-npm.html#:~:text=1%2
     - add "lib": ["ES2021"], to the compileroptions
     <br><br>
 3. Make the following changes to package.json:
-    - Replace "typescript": "^2.6.1" from devDependencies with version 5 or later.
-        - e.g., "typescript": "^5.1.6". 
+    - Either remove typescript from devDependencies, or update typescript to version 5 or later.
     <br><br>
 
-3. Install the modules that you will need.
+3. Update/install the modules that you will need.
 
 4. Check that the 'tsc' command works in the terminal without error.
 
