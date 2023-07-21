@@ -3,7 +3,7 @@
 1. Run 'npm update' to update and install the dependencies.
     - if you want to install the dependencies without updating them, run 'npm i'.
             - Occasionally updates cause compatibility conflicts, and you may need to revert to an old dependency to get the project running before finding a fix.
-    - if you later want to update the dependencies, you may need to remove the node_modules folder.
+    - if you later want to update the dependencies, remove the node_modules folder so that all files will be up to date (not just the ones that get overwritten).
 1. Run 'npm run compile'.
     - note: The 'compile' script is defined in the package.json file. 
 
