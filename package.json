@@ -1,6 +1,6 @@
 {
   "name": "tweeter-entities-chemps-svg",
-  "version": "0.0.8",
+  "version": "0.0.1",
   "description": "Describe your project TODO",
   "main": "dist/index",
   "typings": "dist/index",
