@@ -72,7 +72,7 @@ Rerun the npm link --save [path to the module] from the project.
 
 ## Typescript compilation (for reference only):
 - Even though this module works as both a typescript and javascript module, it never compiles to typescript in the compilation directory.
-- When publishing a module (which we do not do for this course), it might be recommended to only include only the compilation directory in order to save space and have a more proffesional look. To do so:
+- When publishing a module (which we do not do for this course), it might be recommended to only include only the compilation directory in order to save space and have a more professional look. To do so:
 
 Compile typescript declarations to the compilation directory by uncommenting "declaration": true in the tsconfig.json. 
 - This will cause compilation to create .d.ts files corresponding to each .js file in the compilation directory, thus making the javascript files available to typescript.
