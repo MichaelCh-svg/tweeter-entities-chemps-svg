@@ -1,5 +1,6 @@
 # Steps for compiling this project into a typescript and javascript module
 - Compilation will require two files, a tsconfig.json file for compiling the typescript, and a package.json file that handles the javascript settings.
+- Run the specified commands in the terminal.
 
 
 ## Compile typescript to javascript
@@ -14,7 +15,6 @@ tsc
 
 - tsc is the command for compiling the code.
 - This will throw some errors informing of which dependencies and which lib options are missing.
-- Run this command to find out which dependencies and lib options are missing.
 
 npm install [dependency1] [dependency2]
 - This will autogenerate a package.json file with the dependencies.
@@ -23,8 +23,7 @@ In the tsconfig.json file, under the "compilerOptions", uncomment "lib": [], and
 
 tsc
 
-- Run the tsc command again to see the next step.
-- This will suggest running a command that starts with npm i --save-dev @types/...
+- This time, tsc will suggest running a command that starts with npm i --save-dev @types/...
 - This is a command that makes a javascript module available as a typescript module, if that has been enabled for that module.
 
 npm i --save-dev @types/[dependency]
@@ -58,6 +57,7 @@ Now run 'npm run compile' everytime you would like to compile the code
 
 ### Link the module as javascript
 Recompile the code using 'npm run compile' so that it is up to date.
+
 From a separate project, run the following command:
 
 npm link --save [path to the module]
