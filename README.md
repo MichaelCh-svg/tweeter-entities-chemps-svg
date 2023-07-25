@@ -3,7 +3,6 @@
 
 
 ## Compile typescript to javascript
-Run commands in the terminal as specified.
 
 ### Create the typescript compilation file (tsconfig.json)
 
@@ -14,17 +13,18 @@ tsc --init
 tsc
 
 - tsc is the command for compiling the code.
-- This will throw some errors telling you which dependencies and which lib options are missing.
+- This will throw some errors informing of which dependencies and which lib options are missing.
+- Run this command to find out which dependencies and lib options are missing.
 
 npm install [dependency1] [dependency2]
-- This will autogenerate a package.json file.
+- This will autogenerate a package.json file with the dependencies.
 
 In the tsconfig.json file, under the "compilerOptions", uncomment "lib": [], and add the dependency mentioned in the errors from running 'tsc' in the terminal.
 
 tsc
 
 - Run the tsc command again to see the next step.
-- This will ask you to run a command that starts with npm i --save-dev @types/...
+- This will suggest running a command that starts with npm i --save-dev @types/...
 - This is a command that makes a javascript module available as a typescript module, if that has been enabled for that module.
 
 npm i --save-dev @types/[dependency]
@@ -32,7 +32,7 @@ npm i --save-dev @types/[dependency]
 ### Compile javascript code to a specified directory
 - Note that now the project is cluttered with a .js file next to each .ts file. To have clean code, we would like to compile the code to a specified directory
 
-Uncomment  "outDir": "./", in the tsconfig.json file, and add the name of the directory you would like to compile the code to.
+Uncomment  "outDir": "./", in the tsconfig.json file, and add the name of the directory to compile the code to.
 
 Add the following to the package.json file:
 
