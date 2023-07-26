@@ -77,11 +77,15 @@ Rerun the npm link --save [path to the module] from the project.
 Compile typescript declarations to the compilation directory by uncommenting "declaration": true in the tsconfig.json. 
 - This will cause compilation to create .d.ts files corresponding to each .js file in the compilation directory, thus making the javascript files available to typescript.
 
-Add the following to the package.json to limit which files are included in publication:
+Add the following to the package.json:
 
 "files": [
     "[compilation directory]/index.js",
     "[compilation directory]/index.d.ts",
     "[compilation directory]/lib"
   ]
+- This limits which files are included in publication.
+
+"typings": "[compilation directory]/index"
+- This is similar to "main": "[compilation directory]/index", and says where to find the typescript code.
 
