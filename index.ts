@@ -1,5 +1,5 @@
 export { Follow } from "./lib/domain/Follow";
-export { PostSegment } from "./lib/domain/PostSegment";
+export { PostSegment, Type } from "./lib/domain/PostSegment";
 
 export { Status } from "./lib/domain/Status";
 export { User } from "./lib/domain/User";
