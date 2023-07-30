@@ -32,71 +32,41 @@ export class RegisterRequest {
 }
 export class AuthorizedRequest{
 
-    user: User
     token: AuthToken
 
-    constructor(user: User, token: AuthToken){
-        this.user = user;
+    constructor(token: AuthToken){
         this.token = token;
     }
 
     static fromJson (request: AuthorizedRequest){
-        let user = User.fromJson(JSON.stringify(request.user));
         let token = AuthToken.fromJson(JSON.stringify(request.token));
-        if(user == null) throw new Error('Authorized Request, could not deserialize user with json:\n' + JSON.stringify(request.user));
-        else if(token == null) throw new Error('Authorized Request, could not deserialize token with json:\n' + JSON.stringify(request.token));
+        if(token == null) throw new Error('Authorized Request, could not deserialize token with json:\n' + JSON.stringify(request.token));
         else{
-            let deseralizedRequest = new AuthorizedRequest(user, token);
+            let deseralizedRequest = new AuthorizedRequest(token);
             return deseralizedRequest;
         }
     }
 }
-export class GetUserRequest extends AuthorizedRequest{
 
-    usernameToGet: string;
+export class UserRequest extends AuthorizedRequest{
 
-    constructor(user: User, token: AuthToken, usernameToGet: string){
-        super(user, token);
-        this.usernameToGet = usernameToGet;
+    username: string;
+
+    constructor(token: AuthToken, username: string){
+        super(token);
+        this.username = username
     }
 
-    static fromJson (request: GetUserRequest){
+    static fromJson (request: UserRequest){
         let authorizedRequest: AuthorizedRequest;
         try{
             authorizedRequest = AuthorizedRequest.fromJson(request);
         } 
         catch(err){
-            throw new Error('GetUserRequest error: ' + err);
+            throw new Error('UserRequest error: ' + err);
         }
-
-        let deseralizedRequest = new GetUserRequest(authorizedRequest.user, authorizedRequest.token, request.usernameToGet);
+        let deseralizedRequest = new UserRequest(authorizedRequest.token, request.username);
         return deseralizedRequest;
-    }
-}
-
-export class OtherUserRequest extends AuthorizedRequest{
-
-    otherUser: User;
-
-    constructor(user: User, token: AuthToken, otherUser: User){
-        super(user, token);
-        this.otherUser = otherUser
-    }
-
-    static fromJson (request: OtherUserRequest){
-        let authorizedRequest: AuthorizedRequest;
-        try{
-            authorizedRequest = AuthorizedRequest.fromJson(request);
-        } 
-        catch(err){
-            throw new Error('OtherUserRequest error: ' + err);
-        }
-        let otherUser = User.fromJson(JSON.stringify(request.otherUser));
-        if(otherUser == null) throw new Error('OtherUserRequest, could not deserialize otherUser with json:\n' + JSON.stringify(request.otherUser));
-        else{
-            let deseralizedRequest = new OtherUserRequest(authorizedRequest.user, authorizedRequest.token, otherUser);
-            return deseralizedRequest;
-        }
     }
 }
 
@@ -104,8 +74,8 @@ export class PostStatusRequest extends AuthorizedRequest {
 
     post: string;
 
-    constructor(user: User, token: AuthToken, post: string){
-        super(user, token);
+    constructor(token: AuthToken, post: string){
+        super(token);
         this.post = post;
     }
 
@@ -118,20 +88,27 @@ export class PostStatusRequest extends AuthorizedRequest {
             throw new Error('PostStatusRequest error: ' + err);
         }
 
-        let deseralizedRequest = new PostStatusRequest(authorizedRequest.user, authorizedRequest.token, request.post);
+        let deseralizedRequest = new PostStatusRequest(authorizedRequest.token, request.post);
         return deseralizedRequest;
     }
 }
+class PagedRequest<T> extends AuthorizedRequest{
 
-export class FollowListRequest extends AuthorizedRequest{
-
+    username: string;
     limit: number;
-    lastFollowUser: User | null;
+    lastItem: T | null;
 
-    constructor(user: User, token: AuthToken, limit: number, lastFollowUser: User | null){
-        super(user, token);
+    constructor(token: AuthToken, username: string, limit: number, lastItem: T | null){
+        super(token);
+        this.username = username;
         this.limit = limit;
-        this.lastFollowUser = lastFollowUser;
+        this.lastItem = lastItem;
+    }
+}
+export class FollowListRequest extends PagedRequest<User>{
+
+    constructor(token: AuthToken, username: string, limit: number, lastUser: User | null){
+        super(token, username, limit, lastUser);
     }
 
     static fromJson (request: FollowListRequest){
@@ -143,25 +120,23 @@ export class FollowListRequest extends AuthorizedRequest{
             throw new Error('FollowListRequest error: ' + err);
         }
         let lastFollowUser: User | null = null;
-        if(request.lastFollowUser != null){
-            lastFollowUser = User.fromJson(JSON.stringify(request.lastFollowUser));
-            if(lastFollowUser == null) throw new Error('FollowListRequest, could not deserialize lastFollowUser with json:\n' + JSON.stringify(request.lastFollowUser));
+        // JSON.stringify will create the string 'null' if a value is null, which will then cause
+        // an error when deserializing.
+        if(request.lastItem != null){
+            lastFollowUser = User.fromJson(JSON.stringify(request.lastItem));
+            if(lastFollowUser == null) throw new Error('FollowListRequest, could not deserialize lastFollowUser with json:\n' + JSON.stringify(request.lastItem));
         }
 
-        let deseralizedRequest = new FollowListRequest(authorizedRequest.user, authorizedRequest.token, request.limit, lastFollowUser);
+        let deseralizedRequest = new FollowListRequest(authorizedRequest.token, request.username, request.limit, lastFollowUser);
         return deseralizedRequest;
     }
 }
-export class StoryFeedRequest extends AuthorizedRequest{
+export class StoryFeedRequest extends PagedRequest<Status>{
 
-    limit: number;
-    lastStatus: Status | null;
-
-    constructor(user: User, token: AuthToken, limit: number, lastStatus: Status | null){
-        super(user, token);
-        this.lastStatus = lastStatus
-        this.limit = limit;
+    constructor(token: AuthToken, username: string, limit: number, lastStatus: Status | null){
+        super(token, username, limit, lastStatus);
     }
+
     static fromJson (request: StoryFeedRequest){
         let authorizedRequest: AuthorizedRequest;
         try{
@@ -170,9 +145,16 @@ export class StoryFeedRequest extends AuthorizedRequest{
         catch(err){
             throw new Error('StatusListRequest error: ' + err);
         }
-        let deserializedLastStatus = Status.fromJson(JSON.stringify(request.lastStatus));
 
-        let deseralizedRequest = new StoryFeedRequest(authorizedRequest.user, authorizedRequest.token, request.limit, deserializedLastStatus);
+        // JSON.stringify will create the string 'null' if a value is null, which will then cause
+        // an error when deserializing.
+        let deserializedLastStatus: Status | null = null;
+        if(request.lastItem != null) {
+            deserializedLastStatus = Status.fromJson(JSON.stringify(request.lastItem));
+            if(deserializedLastStatus == null) throw new Error('StoryFeedRequest, could not deserialize lastStatus with json:\n' + JSON.stringify(request.lastItem));
+
+        }
+        let deseralizedRequest = new StoryFeedRequest(authorizedRequest.token, request.username, request.limit, deserializedLastStatus);
         return deseralizedRequest;
     }
 }
