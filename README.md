@@ -4,6 +4,15 @@
 
 
 ## Compile typescript to javascript
+```shell
+npm install -g @types/vue.js
+```
+```
+npm install -g @types/vue.js
+```
+```console
+npm install -g @types/vue.js
+```
 
 ### Create the typescript compilation file (tsconfig.json)
 
